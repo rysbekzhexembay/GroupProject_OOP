@@ -12,8 +12,8 @@ public class DB {
         connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/musicstore", "postgres", "1234");
     }
 
-    public static DB getInstance() throws SQLException {
-        if (instance == null || instance.connection.isClosed()) {
+    public static synchronized DB getInstance() throws SQLException {
+        if (instance == null || instance.connection == null || instance.connection.isClosed()) {
             instance = new DB();
         }
         return instance;
